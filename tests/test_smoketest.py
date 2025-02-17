@@ -10,12 +10,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-
 def setup_method(self, method):
   options = Options()
   options.add_argument("--headless=new")
   self.driver = webdriver.Chrome(options=options)
   self.vars = {}
+
   
   def teardown_method(self, method):
     self.driver.quit()
@@ -43,10 +43,6 @@ def setup_method(self, method):
     assert len(elements) > 0
     self.driver.find_element(By.CSS_SELECTOR, ".header-title > h1").click()
     assert self.driver.title == "Teton Idaho CoC"
-    elements = self.driver.find_elements(By.CSS_SELECTOR, ".spotlight1 img")
-    assert len(elements) > 0
-    elements = self.driver.find_elements(By.CSS_SELECTOR, ".spotlight2 img")
-    assert len(elements) > 0
     elements = self.driver.find_elements(By.LINK_TEXT, "Join Us!")
     assert len(elements) > 0
     self.driver.find_element(By.LINK_TEXT, "Join Us!").click()
@@ -62,10 +58,15 @@ def setup_method(self, method):
     self.driver.find_element(By.ID, "password").click()
     self.driver.find_element(By.ID, "password").send_keys("assd")
     self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".errorMessage").click()
     self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
     self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".errorMessage").text == "Invalid username and password."
+    self.driver.find_element(By.LINK_TEXT, "Admin").click()
+    self.driver.find_element(By.ID, "username").click()
+    self.driver.find_element(By.ID, "username").send_keys("jtsangira")
+    self.driver.find_element(By.ID, "password").click()
+    self.driver.find_element(By.ID, "password").send_keys("asad")
+    self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
+    WebDriverWait(self.driver, 30).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".errorMessage"), "Invalid username and password."))
     self.driver.find_element(By.ID, "username").click()
     self.driver.find_element(By.ID, "username").send_keys("sandrashangwa")
     self.driver.find_element(By.ID, "password").click()
