@@ -56,6 +56,15 @@ class TestSmoketest():
     elements = self.driver.find_elements(By.ID, "username")
     assert len(elements) > 0
     self.driver.find_element(By.ID, "username").click()
+    self.driver.find_element(By.ID, "username").send_keys("jtsangira")
+    self.driver.find_element(By.ID, "password").click()
+    self.driver.find_element(By.ID, "password").send_keys("assd")
+    self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".errorMessage").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
+    assert self.driver.find_element(By.CSS_SELECTOR, ".errorMessage").text == "Invalid username and password."
+    self.driver.find_element(By.ID, "username").click()
     self.driver.find_element(By.ID, "username").send_keys("sandrashangwa")
     self.driver.find_element(By.ID, "password").click()
     self.driver.find_element(By.ID, "password").send_keys("asas")
